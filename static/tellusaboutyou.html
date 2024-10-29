@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chatbot Interface</title>
     <link rel="stylesheet" href="stylestellus.css">
+    <link href="https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap" rel="stylesheet">
+    
     <style>
         #uploadedImage {
             max-width: 100%;
@@ -38,15 +40,20 @@
 
         <div id="additionalMessage" style="display: none;">To help us provide the most efficient care possible, you can securely upload your medical report here if you have it on hand.</div>
         
+           
+        </div>
         <div id="uploadContainer">
             <label for="fileInput">
+                <span class="handwritten-text"> click here to upload your medical report!- {</span>
                 <img src="https://thumbs.dreamstime.com/b/cloud-upload-line-icon-black-background-black-flat-style-vector-illustration-cloud-upload-line-icon-black-background-black-168420344.jpg" alt="Upload Image" id="uploadIcon">
             </label>
             <input type="file" id="fileInput" style="display:none;">
+            
             <label for="fileInput2">
                 <img src="https://thumbs.dreamstime.com/b/cloud-upload-line-icon-black-background-black-flat-style-vector-illustration-cloud-upload-line-icon-black-background-black-168420344.jpg" alt="Upload Image" id="uploadIcon2">
             </label>
             <input type="file" id="fileInput2" style="display:none;">
+            <span class="handwritten-text"> }- click here to upload your allergy report!</span>
         </div>
 
         <div id="imageEditor">

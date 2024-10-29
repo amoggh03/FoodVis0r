@@ -190,3 +190,25 @@ button:hover {
     pointer-events: none;
     font-size: 1em;
 }
+.upload-container {
+    display: flex;
+    align-items: center;
+}
+
+.upload-label {
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.handwritten-text {
+    font-family: 'Indie Flower', cursive;
+    font-size: 1rem;
+    color: #ffffff;
+    transform: rotate(-3deg);
+    
+    padding: 4px 8px;
+    border-radius: 5px;
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+    margin-left: 10px;
+}
