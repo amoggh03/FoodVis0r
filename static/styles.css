@@ -1,0 +1,178 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212; /* Dark background */
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative; /* Needed for absolute positioning of elements */
+}
+
+.container {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    position: relative; /* To keep the text above the background */
+    z-index: 1; /* Ensure text is above the background */
+}
+
+.company-title {
+    font-size: 4em;
+    color: #a7f90e;
+    margin-bottom: 10px;
+    animation: title-animation 2s ease forwards;
+}
+
+.intro-text h2 {
+    font-size: 2.5em;
+    color: #666;
+    margin: 10px 0;
+    opacity: 0;
+    animation: fade-in 2s ease 2s forwards;
+}
+
+.intro-text p {
+    font-size: 1.5em;
+    color: #fff;
+    opacity: 0;
+    animation: slide-up 2s ease 2.5s forwards;
+}
+
+.highlight {
+    color: #a7f90e; /* Neon green effect */
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    opacity: 0;
+    animation: fade-in 1.5s ease 4s forwards;
+}
+
+button {
+    padding: 10px 30px; /* Reduced height */
+    border: none;
+    border-radius: 30px;
+    font-size: 1.2em;
+    cursor: pointer;
+    min-width: 200px; /* Ensures buttons are aligned in width */
+    background-color: #444; /* Default button color */
+    color: #fff; /* Text color */
+}
+
+button:first-of-type {
+    background-color: #444;
+    color: #fff;
+}
+
+button:last-of-type {
+    background-color: #fff;
+    color: #121212;
+}
+
+/* Removed hover effect for buttons and wave background */
+
+/* Wave Background */
+.wave-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none; /* Allow interaction with buttons and text */
+    overflow: hidden;
+}
+
+.wave {
+    position: absolute;
+    width: 200%;
+    height: 200%;
+    background: rgba(167, 248, 14, 0.3); /* Neon green with transparency */
+    opacity: 0; /* Initially invisible */
+    transition: opacity 0.5s ease; /* Fade in */
+    border-radius: 50%; /* Circular waves */
+}
+
+/* Starfield Animation */
+.star {
+    position: absolute;
+    border-radius: 50%;
+    background-color: rgba(167, 248, 14, 1); /* Bright neon green */
+    box-shadow: 0 0 10px rgba(167, 248, 14, 0.8), 0 0 20px rgba(167, 248, 14, 0.6);
+    animation: star-animation 2s linear infinite;
+}
+
+@keyframes star-animation {
+    0% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh);
+        opacity: 0;
+    }
+}
+
+/* Animations */
+@keyframes title-animation {
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
+    }
+    50% {
+        transform: scale(1.2);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+@keyframes fade-in {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes slide-up {
+    0% {
+        transform: translateY(30px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.burst-dot {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 50%;
+    background-color: rgba(167, 248, 14, 0.9);
+    animation: burst-dot-animation 0.8s ease-out forwards;
+}
+
+@keyframes burst-dot-animation {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    100% {
+        transform: translate(50px, 50px) scale(0.1);
+        opacity: 0;
+    }
+}

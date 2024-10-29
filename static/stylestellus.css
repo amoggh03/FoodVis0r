@@ -1,0 +1,192 @@
+body {
+    background-color: #0b0b0d;
+    color: white;
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    margin: 0;
+}
+
+#contentContainer {
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    text-align: center;
+}
+
+#weightContainer, #ageContainer, #heightContainer, #allergiesContainer, #medicalInfoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+input[type="text"] {
+    padding: 10px;
+    font-size: 1em;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background-color: #1a1a1d;
+    color: white;
+    margin-right: 10px;
+    flex: 1;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background-color: #1a1a1d;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #333;
+}
+
+#additionalMessage {
+    font-size: 10.8px;
+    font-family: Arial, sans-serif;
+    text-align: center;
+    margin-top: 20px;
+}
+
+#uploadContainer {
+    margin: 20px 0;
+}
+
+#uploadIcon {
+    width: 100px;
+    cursor: pointer;
+}
+#uploadContainer {
+    margin: 20px 0;
+}
+
+#uploadIcon2 {
+    width: 100px;
+    cursor: pointer;
+}
+
+#imageEditor {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+}
+
+#uploadedImage {
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+
+#controlsContainer {
+    display: none;
+}
+
+#sliders {
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    gap: 10px;
+}
+
+#sliders label {
+    font-size: 0.9em;
+}
+
+#submitButton {
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background-color: #1a1a1d;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+#submitButton:hover {
+    background-color: #333;
+}
+#submitf {
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 10px;
+    border: 1px solid #333;
+    background-color: #1a1a1d;
+    color: white;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-bottom: 100px;
+}
+
+#submitf:hover {
+    background-color: #333;
+}
+
+#chatContainer {
+    text-align: center;
+    gap: 10px;
+    position: fixed;
+    bottom: 20px;
+    width: calc(100% - 40px);
+    max-width: 600px;
+    padding: 0 20px;
+    overflow-y: auto;
+    z-index: 1;
+}
+
+#chatContainer::-webkit-scrollbar {
+    width: 10px;
+}
+
+#chatContainer::-webkit-scrollbar-thumb {
+    background-color: #000000;
+}
+
+#chatContainer::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}
+
+#promptText {
+    color: lightgrey;
+    font-size: 0.7em;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+#chatInputContainer {
+    position: relative;
+    width: 100%;
+}
+
+#chatInput {
+    width: 100%;
+    padding: 15px;
+    font-size: 1em;
+    border-radius: 25px;
+    border: 1px solid #333;
+    background-color: #1a1a1d;
+    color: white;
+}
+
+#chatInput:focus {
+    outline: none;
+}
+
+#placeholderText {
+    position: absolute;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%);
+    color: grey;
+    pointer-events: none;
+    font-size: 1em;
+}

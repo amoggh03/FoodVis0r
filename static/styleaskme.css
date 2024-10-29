@@ -1,0 +1,165 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    text-align: center;
+}
+
+.container h1 {
+    font-size: 4em;
+    margin: 20px 0 10px;
+    transition: margin-top 0.5s;
+}
+
+.container h2 {
+    font-size: 2em;
+    margin-top: 0;
+    color: #666;
+}
+
+.messages {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 10px;
+    background-color: #1e1e1e;
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 60vh;
+}
+
+.message {
+    margin: 10px 0;
+}
+
+.assistant {
+    background: linear-gradient(to right, #00f, #0f0, #f00, #0ff, #f0f, #ff0);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.chat-box {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    gap: 10px;
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    justify-content: center;
+}
+
+.chat-box input {
+    flex: 1;
+    padding: 15px;
+    background: #1e1e1e;
+    border: 1px solid #333;
+    border-radius: 15px;
+    outline: none;
+    color: #fff;
+    font-size: 1em;
+    text-align: center;
+}
+
+.chat-box button {
+    width: 50px;
+    background: none;
+    border: 1px solid #333;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 1.2em;
+    cursor: pointer;
+}
+
+.camera-icon {
+    width: 50px;
+    height: 50px;
+    background: none;
+    border: 1px solid #333;
+    border-radius: 15px;
+    color: #fff;
+    font-size: 1.5em;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.overlay-content {
+    background: #2c2c2c;
+    border-radius: 10px;
+    padding: 20px;
+    text-align: center;
+    max-width: 500px;
+    width: 90%;
+}
+
+.overlay-content h2 {
+    margin-bottom: 15px;
+}
+
+.overlay-content img {
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+.slider-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.slider-wrapper {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.slider-label {
+    margin-right: 10px;
+}
+
+.slider {
+    flex: 1;
+}
+
+.submit-button {
+    padding: 10px 15px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.close-button {
+    cursor: pointer;
+    font-size: 1.5em;
+    color: #fff;
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}

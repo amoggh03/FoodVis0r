@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Interface</title>
+    <link rel="stylesheet" href="stylestellus.css">
+    <style>
+        #uploadedImage {
+            max-width: 100%;
+            height: auto;
+        }
+        #imageEditor {
+            display: none;
+        }
+        #controlsContainer {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="contentContainer">
+       <br><br><br><br>
+        <p id="subGreeting">Follow these easy steps to personalize your assistant experience! In no time.</p>
+
+        <div id="weightContainer">
+            <input type="text" id="weightInput" placeholder="Enter your weight in Kg">
+            <button id="submitWeightButton">&#10004;</button>
+        </div>
+        <div id="ageContainer">
+            <input type="text" id="ageInput" placeholder="Enter your Age">
+            <button id="submitAgeButton">&#10004;</button>
+        </div>
+        <div id="heightContainer">
+            <input type="text" id="heightInput" placeholder="Enter your height in cm">
+            <button id="submitHeightButton">&#10004;</button>
+        </div>
+
+        <div id="additionalMessage" style="display: none;">To help us provide the most efficient care possible, you can securely upload your medical report here if you have it on hand.</div>
+        
+        <div id="uploadContainer">
+            <label for="fileInput">
+                <img src="https://thumbs.dreamstime.com/b/cloud-upload-line-icon-black-background-black-flat-style-vector-illustration-cloud-upload-line-icon-black-background-black-168420344.jpg" alt="Upload Image" id="uploadIcon">
+            </label>
+            <input type="file" id="fileInput" style="display:none;">
+            <label for="fileInput2">
+                <img src="https://thumbs.dreamstime.com/b/cloud-upload-line-icon-black-background-black-flat-style-vector-illustration-cloud-upload-line-icon-black-background-black-168420344.jpg" alt="Upload Image" id="uploadIcon2">
+            </label>
+            <input type="file" id="fileInput2" style="display:none;">
+        </div>
+
+        <div id="imageEditor">
+            <div id="imageContainer">
+                <img id="uploadedImage" src="#" alt="Uploaded Image">
+            </div>
+            <div id="controlsContainer">
+                <div class="controlGroup">
+                    <label for="brightnessSlider">Brightness</label>
+                    <input type="range" id="brightnessSlider" min="0" max="200" value="100">
+                </div>
+                <div class="controlGroup">
+                    <label for="contrastSlider">Contrast</label>
+                    <input type="range" id="contrastSlider" min="0" max="200" value="100">
+                </div>
+                <div class="controlGroup">
+                    <label for="sharpenSlider">Sharpen</label>
+                    <input type="range" id="sharpenSlider" min="0" max="200" value="0">
+                </div>
+            </div>
+            <button id="submitButton">Submit</button>
+        </div>
+        
+        <div id="allergiesContainer">
+            <input type="text" id="allergyInput" placeholder="If you have any allergy you can type">
+            <button id="submitAllergyButton">&#10004;</button>
+        </div>
+        <div id="medicalInfoContainer">
+            <input type="text" id="medicalInfoInput" placeholder="If you have any medical specifications you can enter here">
+            <button id="submitMedicalInfoButton">&#10004;</button>
+        </div>
+        <div><button id="submitf" onclick="nextpage()">&#10004;</button></div>
+    </div>
+
+    <script>
+        var isSecondUpload = false;
+        var extractedText1 = '';
+        var extractedText2 = '';
+        var personalDetails = '';
+    
+        // Event listener for height input
+        document.getElementById('submitHeightButton').addEventListener('click', function() {
+    const weight = document.getElementById('weightInput').value;
+    const age = document.getElementById('ageInput').value;
+    const height = document.getElementById('heightInput').value;
+
+    // Create the personal details string
+    const personalDetails = `Weight: ${weight}, Age: ${age} years, Height: ${height} cm`;
+
+    // Update the personalDetails variable
+    window.personalDetails = personalDetails;
+
+    // Display an alert with updated personal details
+    alert(`Personal Details Updated:\n${personalDetails}`);
+
+    // Send the updated details to the server
+    fetch('/updatePersonalDetails', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ personalDetails: personalDetails })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log('Personal details updated successfully');
+        } else {
+            console.error('Error updating personal details:', data.error);
+        }
+    })
+    .catch(error => console.error('Fetch error:', error));
+});
+    
+        // Event listener for allergy input
+        document.getElementById('submitAllergyButton').addEventListener('click', function() {
+            var allergy = document.getElementById('allergyInput').value.trim();
+            if (allergy) {
+                extractedText1 += allergy + ' ';
+                alert(extractedText1);
+            }
+        });
+    
+        // Event listener for medical info input
+        document.getElementById('submitMedicalInfoButton').addEventListener('click', function() {
+            var medicalInfo = document.getElementById('medicalInfoInput').value.trim();
+            if (medicalInfo) {
+                extractedText2 += medicalInfo + ' ';
+                alert(extractedText2);
+            }
+        });
+    
+        // Handle file upload
+        document.getElementById('fileInput').addEventListener('change', function(event) {
+            handleFileUpload(event, false);
+        });
+    
+        document.getElementById('fileInput2').addEventListener('change', function(event) {
+            handleFileUpload(event, true);
+        });
+    
+        function handleFileUpload(event, isSecond) {
+            var file = event.target.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('uploadedImage').src = e.target.result;
+                    document.getElementById('imageEditor').style.display = 'block';
+                    document.getElementById('controlsContainer').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+            isSecondUpload = isSecond;
+        }
+    
+        // Update image filters
+        document.getElementById('brightnessSlider').addEventListener('input', function() {
+            updateImageFilters();
+        });
+    
+        document.getElementById('contrastSlider').addEventListener('input', function() {
+            updateImageFilters();
+        });
+    
+        document.getElementById('sharpenSlider').addEventListener('input', function() {
+            updateImageFilters();
+        });
+    
+        function updateImageFilters() {
+            var brightness = document.getElementById('brightnessSlider').value;
+            var contrast = document.getElementById('contrastSlider').value;
+            var sharpen = document.getElementById('sharpenSlider').value;
+    
+            brightness = brightness || 100;
+            contrast = contrast || 100;
+    
+            var filterValue = `brightness(${brightness}%) contrast(${contrast}%)`;
+            document.getElementById('uploadedImage').style.filter = filterValue;
+    
+            var saturateValue = 100 + sharpen * 2;
+            document.getElementById('uploadedImage').style.filter += ` saturate(${saturateValue}%)`;
+        }
+    
+        // Submit the image and text data
+        document.getElementById('submitButton').addEventListener('click', function() {
+            if (!personalDetails) {
+                alert("Please enter your personal details.");
+                return;
+            }
+    
+            var imageSrc = document.getElementById('uploadedImage').src;
+            fetch('/saveImage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    allergyReport: isSecondUpload ? '' : imageSrc,
+                    medicalReport: isSecondUpload ? imageSrc : '',
+                    personalDetails: personalDetails,
+                    extractedText1: extractedText1.trim(),
+                    extractedText2: extractedText2.trim()
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    if (!isSecondUpload) {
+                        if (confirm('Image saved successfully. Do you want to add the allergic report now?')) {
+                            isSecondUpload = true;
+                            document.getElementById('imageEditor').style.display = 'none';
+                            document.getElementById('fileInput').value = '';
+                        } else {
+                            alert('Registration completed successfully!');
+                            window.location.href = 'askme.html';
+                        }
+                    } else {
+                        alert('Successfully completed the registration!');
+                        window.location.href = 'askme.html';
+                    }
+                } else {
+                    alert('Failed to save image. Please try again.');
+                }
+            })
+            .catch(error => {
+                console.error('Error saving image:', error);
+                alert('Failed to save image. Please try again.');
+            });
+        });
+    
+        // Submit combined text data
+        document.getElementById('submitf').addEventListener('click', function() {
+    // Capture values from the input fields
+    var weight = document.getElementById('weightInput').value.trim();
+    var age = document.getElementById('ageInput').value.trim();
+    var height = document.getElementById('heightInput').value.trim();
+    var allergy = document.getElementById('allergyInput').value.trim();
+    var medicalInfo = document.getElementById('medicalInfoInput').value.trim();
+
+    // Construct the combined text
+    var combinedText = `Personal Details:\nWeight: ${weight} kg\nAge: ${age} years\nHeight: ${height} cm\nAllergies: ${allergy}\nMedical Info: ${medicalInfo}`;
+    console.log("Combined Text:", combinedText); // Debugging
+    alert(combinedText);
+
+    // Send the data to the server
+    fetch('/saveCombinedText', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            personalDetails: {
+                weight: weight,
+                age: age,
+                height: height
+            },
+            allergyInput: allergy,
+            medicalInfoInput: medicalInfo
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = 'askme.html'; // Redirect on success
+        } else {
+            alert('Failed to save combined text. Please try again.');
+        }
+    })
+    .catch(error => {
+        console.error('Error saving combined text:', error);
+        alert('Failed to save combined text. Please try again.');
+    });
+});
+    </script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoodVisor</title>
+    <link rel="stylesheet" href="styleaskme.css">
+    <script>
+        let uploadedImage = null;
+        let typingEffectInterval = null;  // Variable to hold typing effect interval
+        let stopTyping = false;  // Flag to control typing
+
+        async function sendMessage() {
+            const question = document.getElementById('question').value;
+            if (question.trim() === "") return;
+
+            const messagesDiv = document.getElementById('messages');
+            messagesDiv.style.display = 'block';
+
+            const userMessage = document.createElement('div');
+            userMessage.className = 'message';
+            userMessage.textContent = `You: ${question}`;
+            messagesDiv.appendChild(userMessage);
+
+            const botMessage = document.createElement('div');
+            botMessage.className = 'message assistant';
+            botMessage.textContent = 'Assistant: ';
+            messagesDiv.appendChild(botMessage);
+
+            const response = await fetch('/chat', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ message: question })
+            });
+            const data = await response.json();
+
+            let reply = data.reply;
+            let index = 0;
+            stopTyping = false;  // Reset stop flag
+
+            // Function to type out the assistant's reply
+            function typeEffect() {
+                if (index < reply.length && !stopTyping) {
+                    botMessage.textContent += reply[index];
+                    index++;
+                    setTimeout(typeEffect, 30); // Increased speed to 30 ms
+                }
+            }
+            typeEffect();
+
+            // Show the stop button and hide the send button
+            document.getElementById('send-button').style.display = 'none';
+            document.getElementById('stop-button').style.display = 'inline-block';
+
+            document.getElementById('question').value = '';
+            messagesDiv.scrollTop = messagesDiv.scrollHeight;
+        }
+
+        function stopTypingEffect() {
+            stopTyping = true;  // Set flag to stop typing effect
+            document.getElementById('send-button').style.display = 'inline-block'; // Show send button
+            document.getElementById('stop-button').style.display = 'none'; // Hide stop button
+        }
+
+        function loadPicker() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*';
+            input.onchange = handleImageUpload;
+            input.click();
+        }
+
+        function handleImageUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                uploadedImage = e.target.result;
+                showImageOverlay(uploadedImage);
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function showImageOverlay(imageSrc) {
+            const overlay = document.getElementById('image-overlay');
+            overlay.style.display = 'flex';
+
+            const img = document.getElementById('uploaded-image');
+            img.src = imageSrc;
+
+            document.getElementById('brightnessSlider').value = 100; // Reset sliders
+            document.getElementById('contrastSlider').value = 100;
+            updateImage();
+        }
+
+        function closeImageOverlay() {
+            const overlay = document.getElementById('image-overlay');
+            overlay.style.display = 'none';
+        }
+
+        function updateImage() {
+            const brightness = document.getElementById('brightnessSlider').value;
+            const contrast = document.getElementById('contrastSlider').value;
+
+            const img = document.getElementById('uploaded-image');
+            img.style.filter = `brightness(${brightness}%) contrast(${contrast}%)`;
+        }
+
+        function saveImage() {
+            const canvas = document.createElement('canvas');
+            const img = document.getElementById('uploaded-image');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+            ctx.filter = img.style.filter;
+            ctx.drawImage(img, 0, 0);
+            const imageSrc = canvas.toDataURL('image/jpeg');
+
+            fetch('/saveImage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ imageSrc: imageSrc })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Image saved successfully!');
+                } else {
+                    alert('Error saving image: ' + data.error);
+                }
+                closeImageOverlay();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        }
+
+        function toggleSliderContainer() {
+            const sliderContainer = document.getElementById('slider-container');
+            sliderContainer.style.display = sliderContainer.style.display === 'flex' ? 'none' : 'flex';
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1 id="brand-name">FoodVisor</h1>
+        <h2 id="welcome-text">Ask me anything about food safety!</h2>
+        <div class="messages" id="messages" style="display: none;"></div>
+        <div class="chat-box">
+            <input type="text" id="question" placeholder="Type your question..." />
+            <button id="send-button" onclick="sendMessage()">Send</button>
+            <button id="stop-button" onclick="stopTypingEffect()" style="display: none;">Stop</button>
+            <div class="camera-icon" onclick="loadPicker()">📷</div>
+        </div>
+    </div>
+
+    <!-- Image Upload Overlay -->
+    <div id="image-overlay" class="overlay">
+        <div class="overlay-content">
+            <span class="close-button" onclick="closeImageOverlay()">&times;</span>
+            <h2>Edit Image</h2>
+            <img id="uploaded-image" src="" alt="Uploaded Image" />
+            <div class="slider-container">
+                <div class="slider-wrapper">
+                    <label class="slider-label" for="brightnessSlider">Brightness</label>
+                    <input class="slider" id="brightnessSlider" type="range" min="0" max="200" value="100" oninput="updateImage()" />
+                </div>
+                <div class="slider-wrapper">
+                    <label class="slider-label" for="contrastSlider">Contrast</label>
+                    <input class="slider" id="contrastSlider" type="range" min="0" max="200" value="100" oninput="updateImage()" />
+                </div>
+                <button class="submit-button" onclick="saveImage()">Save Image</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
