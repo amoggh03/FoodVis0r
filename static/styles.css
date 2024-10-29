@@ -176,3 +176,161 @@ button:last-of-type {
         opacity: 0;
     }
 }
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Navigation Bar */
+.navbar {
+    width: 100%;
+    padding: 15px 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #121212; /* Same as the page background */
+    position: fixed;
+    top: 0;
+    z-index: 10;
+    transition: background-color 0.3s ease; /* Smooth transition */
+}
+
+.navbar:hover {
+    background-color: #444; /* Grey on hover */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.logo {
+    width: 40px;
+    height: 40px;
+}
+
+.navbar-title {
+    font-size: 1.8em;
+    color: #a7f90e;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1em;
+    padding: 8px 15px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.nav-links a:hover {
+    background-color: #a7f90e; /* Highlight color on link hover */
+    color: #333;
+}
+
+.hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+}
+
+.hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    transition: all 0.3s ease;
+}
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 60px;
+        right: 0;
+        background-color: #121212; /* Same as the page background */
+        width: 100%;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 10px 20px;
+        gap: 10px;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .nav-links a {
+        width: 100%;
+        text-align: right;
+        padding: 10px 15px;
+    }
+}
+.navbar {
+    background-color: #121212; /* Same as background */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+    position: fixed;
+    width: 100%;
+    z-index: 10; /* Make sure it's above other elements */
+    transition: background-color 0.3s;
+}
+
+.navbar:hover {
+    background-color: #444444; /* Grey on hover */
+}
+
+.logo {
+    height: 40px; /* Adjust logo size as needed */
+}
+
+.navbar-title {
+    color: #a7f90e; /* Neon green */
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #fff; /* Text color */
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.nav-links a:hover {
+    color: #000000; /* Neon green on hover */
+}

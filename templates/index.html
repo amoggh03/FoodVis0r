@@ -7,10 +7,28 @@
     <link rel="stylesheet" href="static/styles.css">
 </head>
 <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="logo-container">
+            <img id="logo" src="static/logo.png" alt="FoodVisor Logo" class="logo">
+            <span class="navbar-title">FoodVisor</span>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="static/tellusaboutyou.html">Personalise</a></li>
+            <li><a href="static/askme.html">Chat</a></li>
+            <li><a href="static/calorietracker.html">Coming Soon</a></li>
+        </ul>
+        <div class="hamburger" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+    </nav>
+
     <div class="container">
         <h1 class="company-title animate-title">FoodVisor</h1>
         <div class="intro-text">
-            <h2 class="animate-greeting">hey!</h2>
             <p class="animate-tagline">I'm your personal food advisor - <span class="highlight">"FoodVisor"</span>.</p>
         </div>
         <div class="button-container animate-buttons">
@@ -20,5 +38,37 @@
     </div>
     <div class="wave-container"></div>
     <script src="static/script.js"></script>
+    <script>
+        const logo = document.getElementById('logo');
+        const navbar = document.querySelector('.navbar');
+    
+        function changeLogo(shouldChange) {
+            logo.src = shouldChange ? 'static/logo2.png' : 'static/logo.png';
+        }
+    
+        // Handle scrolling
+        function handleScroll() {
+            changeLogo(window.scrollY > 0);
+        }
+    
+        // Handle mouse enter and leave for the navbar
+        function handleMouseEnter() {
+            changeLogo(true);
+        }
+    
+        function handleMouseLeave() {
+            changeLogo(window.scrollY > 0);
+        }
+    
+        window.addEventListener('scroll', handleScroll);
+        navbar.addEventListener('mouseenter', handleMouseEnter);
+        navbar.addEventListener('mouseleave', handleMouseLeave);
+    
+        function toggleMenu() {
+            // Functionality for the hamburger menu can be implemented here
+        }
+    </script>
+    
+    
 </body>
 </html>

@@ -1,3 +1,7 @@
+function toggleMenu() {
+    const navLinks = document.querySelector('.nav-links');
+    navLinks.classList.toggle('show');
+}
 
 function createStar() {
     const star = document.createElement("div");
