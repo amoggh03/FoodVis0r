@@ -5,6 +5,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>FoodVisor</title>
     <link rel="stylesheet" href="static/styles.css">
+    <style>
+        .company-title {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #a7f90e; /* Updated green color */
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1.5s ease-in-out, transform 1.5s ease-in-out;
+            position: relative; /* Needed for smoke effect */
+            z-index: 1; /* Ensure it is above the smoke */
+        }
+
+        .visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .compressed {
+            animation: compress 1.5s forwards;
+        }
+
+        @keyframes compress {
+            from {
+                font-size: 3rem;
+            }
+            to {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Smoke Effect */
+        .company-title::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%;
+            height: 150%;
+            background: radial-gradient(circle, rgba(167, 248, 14, 0.1), transparent);
+            transform: translate(-50%, -50%);
+            opacity: 0;
+            filter: blur(10px);
+            animation: smoke 2s ease-in-out 1.5s forwards;
+        }
+
+        @keyframes smoke {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(1);
+            }
+            100% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(1.5);
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation Bar -->
@@ -27,10 +83,7 @@
     </nav>
 
     <div class="container">
-        <h1 class="company-title animate-title">FoodVisor</h1>
-        <div class="intro-text">
-            <p class="animate-tagline">I'm your personal food advisor - <span class="highlight">"FoodVisor"</span>.</p>
-        </div>
+        <h1 class="company-title animate-title">Food Advisor</h1>
         <div class="button-container animate-buttons">
             <button onclick="window.location.href='static/tellusaboutyou.html'">Tell Us About You</button>
             <button onclick="window.location.href='static/askme.html'">Ask me!</button>
@@ -41,34 +94,41 @@
     <script>
         const logo = document.getElementById('logo');
         const navbar = document.querySelector('.navbar');
-    
+        const title = document.querySelector('.company-title');
+
         function changeLogo(shouldChange) {
             logo.src = shouldChange ? 'static/logo2.png' : 'static/logo.png';
         }
-    
-        // Handle scrolling
+
         function handleScroll() {
             changeLogo(window.scrollY > 0);
         }
-    
-        // Handle mouse enter and leave for the navbar
+
         function handleMouseEnter() {
             changeLogo(true);
         }
-    
+
         function handleMouseLeave() {
             changeLogo(window.scrollY > 0);
         }
-    
+
         window.addEventListener('scroll', handleScroll);
         navbar.addEventListener('mouseenter', handleMouseEnter);
         navbar.addEventListener('mouseleave', handleMouseLeave);
-    
+
         function toggleMenu() {
-            // Functionality for the hamburger menu can be implemented here
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.classList.toggle('show');
         }
+
+        window.addEventListener('load', () => {
+            title.classList.add('visible');
+
+            setTimeout(() => {
+                title.textContent = 'FoodVisor';
+                title.classList.add('compressed');
+            }, 1500);
+        });
     </script>
-    
-    
 </body>
 </html>
